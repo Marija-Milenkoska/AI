@@ -20,6 +20,7 @@
 
 (90, 100] - 10
 """
+
 import os
 import sys
 os.environ["OPENBLAS_NUM_THREADS"] = "1"
@@ -46,20 +47,20 @@ if __name__ == "__main__":
 
     lines = sys.stdin.readlines()
     for line in lines:
-        line = line.strip()
+        #line = line.strip()
         if(line == "end"):
             break;
         parts = line.split(",");
         if(len(parts) != 7 ):
             continue;
-    
-        ime = parts[0].strip()
-        prezime = parts[1].strip()
-        broj_na_indeks = parts[2].strip()
-        predmet = parts[3].strip()
-        poeni_teorija = float(parts[4].strip())
-        poeni_prakticno = float(parts[5].strip())
-        poeni_labs = float(parts[6].strip())
+    #VIDI TUKA DALI TREBIT .strip()
+        ime = parts[0]
+        prezime = parts[1]
+        broj_na_indeks = parts[2]
+        predmet = parts[3]
+        poeni_teorija = float(parts[4])
+        poeni_prakticno = float(parts[5])
+        poeni_labs = float(parts[6])
         ocenka = presmetaj_ocenka(poeni_teorija, poeni_prakticno, poeni_labs)
 
         if broj_na_indeks not in students:
