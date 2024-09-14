@@ -1,1 +1,78 @@
+"""
+Дефинирајте речник students во кој ќе се чуваат информации за предметите кои ги полагале студентите.
+Од стандарден влез се читаат информации за име, презиме, број на индекс, предмет, поени од теоретски дел, 
+поени од практичен дел и поени од лабораториски вежби. Може да се вчитаат информации за неограничен број студенти.
+Вчитувањето информации завршува кога ќе се прочита клучниот збор end. Пополнете го речникот students со вчитаните информации.
 
+Потоа, за секој од студентите да се испечати името и презимето, и оцената за секој од предметите кои ги има полагано.
+
+Оцената се пресметува на следниот начин:
+
+[0, 50] - 5
+
+(50, 60] - 6
+
+(60, 70] - 7
+
+(70, 80] - 8
+
+(80, 90] - 9
+
+(90, 100] - 10
+"""
+import os
+import sys
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+
+def presmetaj_ocenka (poeni_prakticno, poeni_teorija, poeni_labs):
+    vkupno = poeni_prakticno + poeni_teorija + poeni_labs;
+    if(vkupno<=50):
+        return 5;
+    elif(vkupno > 50 and vkupno <= 60):
+        return 6;
+    elif(vkupno > 60 and vkupno <= 70):
+        return 7;
+    elif(vkupno > 70 and vkupno <= 80):
+        return 8;
+    elif(vkupno > 80 and vkupno <= 90):
+        return 9;
+    elif(vkupno > 90 and vkupno <= 100):
+        return 10;
+    else:
+        return "Error";
+if __name__ == "__main__":
+
+    students = {}
+
+    lines = sys.stdin.readlines()
+    for line in lines:
+        line = line.strip()
+        if(line == "end"):
+            break;
+        parts = line.split(",");
+        if(len(parts) != 7 ):
+            continue;
+    
+        ime = parts[0].strip()
+        prezime = parts[1].strip()
+        broj_na_indeks = parts[2].strip()
+        predmet = parts[3].strip()
+        poeni_teorija = float(parts[4].strip())
+        poeni_prakticno = float(parts[5].strip())
+        poeni_labs = float(parts[6].strip())
+        ocenka = presmetaj_ocenka(poeni_teorija, poeni_prakticno, poeni_labs)
+
+        if broj_na_indeks not in students:
+            students[broj_na_indeks] ={
+                "ime": ime,
+                "prezime": prezime,
+                "predmeti": {}
+
+            }
+        students[broj_na_indeks]["predmeti"][predmet] = ocenka
+
+    for broj_na_indeks, student_info in students.items():
+        print(f"Student: {student_info['ime']} {student_info['prezime']}")
+        for predmet, ocenka in student_info["predmeti"].items():
+            print(f"----{predmet}: {ocenka}")
+        print()
